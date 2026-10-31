@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ebook: Don't Give Up! by Rev. Dr. Chris Johnson, PhD</title>
+
+<!-- SEO -->
+<meta name="description" content="Don't Give Up! A faith-based devotional ebook by Rev. Dr. Chris Johnson, PhD. Read it on your Android phone, online or offline.">
+<meta name="keywords" content="Christian ebook, devotional, don't give up, Jeremiah 29:11, faith, encouragement, Rev Dr Chris Johnson">
+<meta name="author" content="Rev. Dr. Chris Johnson, PhD">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="canonical" href="https://YOUR-USERNAME.github.io/dont-give-up/">
+
+<!-- Icons: replace the placeholder URLs with your hosted PNG files -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="https://REPLACE-WITH-YOUR-HOSTED-URL/favicon-32.png">
+<link rel="apple-touch-icon" href="https://REPLACE-WITH-YOUR-HOSTED-URL/icon-180.png">
+
+<!-- Open Graph (Facebook, WhatsApp link previews) -->
+<meta property="og:type" content="book">
+<meta property="og:title" content="Don't Give Up! by Rev. Dr. Chris Johnson, PhD">
+<meta property="og:description" content="A faith-based devotional ebook. Unlock it with your access code and read online or offline.">
+<meta property="og:url" content="https://YOUR-USERNAME.github.io/dont-give-up/">
+<meta property="og:site_name" content="Ebook">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://REPLACE-WITH-YOUR-HOSTED-URL/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Don't Give Up! ebook cover">
+<meta property="book:author" content="Rev. Dr. Chris Johnson, PhD">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Don't Give Up! by Rev. Dr. Chris Johnson, PhD">
+<meta name="twitter:description" content="A faith-based devotional ebook.">
+<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-HOSTED-URL/og-image.png">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Book","name":"Don't Give Up!","author":{"@type":"Person","name":"Rev. Dr. Chris Johnson, PhD"},"inLanguage":"en","bookFormat":"https://schema.org/EBook","genre":"Christian devotional","url":"https://YOUR-USERNAME.github.io/dont-give-up/"}
+</script>
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Runs before first paint: desktop blocker, saved theme, saved text size -->
+<script>
+(function () {
+  var d = document.documentElement, ua = navigator.userAgent || '';
+  var phone = /Android/i.test(ua) && /Mobile/i.test(ua);
+  var touch = (navigator.maxTouchPoints || 0) > 0;
+  var mouse = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var small = Math.min(screen.width, screen.height) <= 600;
+  if (!(phone && touch && small && !mouse)) { d.classList.add('blocked'); }
+  try {
+    var t = localStorage.getItem('ebook_theme');
+    if (!t) { t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+    d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+    var f = parseInt(localStorage.getItem('ebook_fs'), 10);
+    if (f >= 19 && f <= 23) { d.style.setProperty('--fs', f + 'px'); }
+  } catch (e) {}
+})();
+</script>
+</head>
+<body class="locked">
+
+<!-- Desktop blocker (full screen) -->
+<div id="blocker" role="alert">
+  <svg viewBox="0 0 24 24" width="72" height="72" fill="currentColor" aria-hidden="true"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zM17 19H7V5h10v14z"/></svg>
+  <h2>Android phones only</h2>
+  <p>This ebook is built for Android phones. Open this link in Chrome on your Android phone. If "Desktop site" is turned on in Chrome, turn it off.</p>
+</div>
+
+<div id="app">
+  <header class="topbar">
+    <button class="iconbtn" id="btnLeft" aria-label="Open menu"></button>
+    <h1 class="brand">Ebook</h1>
+    <button class="iconbtn" id="btnRight" aria-label="More options"></button>
+  </header>
+
+  <nav class="navrow" id="navrow" aria-label="Book navigation">
+    <button class="navbtn" id="navToc"><span class="pill"></span><span>TOC</span></button>
+    <button class="navbtn" id="navFront"><span class="pill"></span><span>Front</span></button>
+    <button class="navbtn" id="navPrev"><span class="pill"></span><span>Prev</span></button>
+    <button class="navbtn" id="navNext"><span class="pill"></span><span>Next</span></button>
+    <button class="navbtn" id="btnDark" aria-label="Toggle dark mode"><span class="pill"></span><span class="lbl">Dark</span></button>
+  </nav>
+
+  <main id="main"><div id="view"></div></main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer left" id="drawerLeft" aria-label="Information menu">
+  <div class="dr-head">
+    <div class="dr-logo" id="drLogo"></div>
+    <div><div class="dr-title">Ebook</div><div class="dr-sub">Don't Give Up!</div></div>
+  </div>
+  <div id="leftList"></div>
+</aside>
+
+<aside class="drawer right" id="drawerRight" aria-label="Options menu">
+  <div class="dr-head">
+    <div class="dr-logo" id="drLogo2"></div>
+    <div><div class="dr-title">Options</div><div class="dr-sub">Make reading comfortable</div></div>
+  </div>
+  <div id="rightList"></div>
+</aside>
+
+<section class="sheet" id="sheet" aria-modal="true" role="dialog" aria-labelledby="sheetTitle">
+  <div class="sheet-bar">
+    <button class="iconbtn" id="sheetBack" aria-label="Back"></button>
+    <h2 id="sheetTitle"></h2>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</section>
+
+<div id="dialogHost"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="spinner" role="status" aria-live="polite">
+  <div class="spin-card"><div class="spin"></div><div id="spinMsg">Please wait...</div></div>
+</div>
+
+<noscript><p style="padding:24px;font-size:19px">JavaScript is required to read this ebook.</p></noscript>
+
+<script src="book.js"></script>
+<script src="lock.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
