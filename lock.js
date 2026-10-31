@@ -1,10 +1,8 @@
-/* lock.js - access code check against your Google Apps Script web app.
-   Paste your Web App URL into API_URL (see Deployment.md). Each code works on one device only. */
 (function () {
   'use strict';
 
   var CFG = {
-    API_URL: 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE',
+    API_URL: 'https://script.google.com/macros/s/AKfycby8udSzdfXAtT2rjBrEHuEQ9HNcIWfv9OW3XPJowKmKx2C-qifBxxQ55Q0qsL3IZzkd9g/exec',
     PRODUCT: 'dont-give-up',     /* must match PRODUCT in the Settings sheet */
     VERIFY_HOURS: 6,             /* how often an unlocked device re-checks its code (when online) */
     TIMEOUT_MS: 25000
