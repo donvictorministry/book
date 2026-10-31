@@ -44,7 +44,9 @@
     lock: 'M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z',
     boxoff: 'M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z',
     boxon: 'M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z',
-    cross: 'M10 2h4v7h7v4h-7v9h-4v-9H3V9h7z'
+    cross: 'M10 2h4v7h7v4h-7v9h-4v-9H3V9h7z',
+    eye: 'M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z',
+    eyeoff: 'M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'
   };
   function svg(name, size) {
     var s = size || 24;
@@ -145,36 +147,43 @@
     if (r) { r.value = n; }
   }
 
-  /* ---------- overlays (with Android back button support) ---------- */
-  var openKind = null, inHist = false;
-  function closeDom() {
-    $('#drawerLeft').classList.remove('open');
-    $('#drawerRight').classList.remove('open');
-    $('#sheet').classList.remove('open');
-    $('#scrim').classList.remove('show');
-    openKind = null;
+  /* ---------- overlays: each level has its own history entry, so Android back
+     closes the page first, then the menu, then returns to the home page ---------- */
+  var stack = [];
+  function applyOv() {
+    $('#drawerLeft').classList.toggle('open', stack.indexOf('left') > -1);
+    $('#drawerRight').classList.toggle('open', stack.indexOf('right') > -1);
+    $('#sheet').classList.toggle('open', stack.indexOf('sheet') > -1);
   }
-  function showOv(kind) {
-    closeDom();
-    openKind = kind;
-    if (kind === 'left') { $('#drawerLeft').classList.add('open'); $('#scrim').classList.add('show'); }
-    if (kind === 'right') { $('#drawerRight').classList.add('open'); $('#scrim').classList.add('show'); }
-    if (kind === 'sheet') { $('#sheet').classList.add('open'); }
-    if (!inHist) { history.pushState({ ov: 1 }, ''); inHist = true; }
+  function pushOv(kind) {
+    if (stack[stack.length - 1] === kind) { return; }
+    stack.push(kind);
+    history.pushState({ ov: stack.length }, '');
+    applyOv();
   }
-  function closeOv() {
-    if (!openKind) { return; }
-    closeDom();
-    if (inHist) { inHist = false; history.back(); }
+  function backOv() {
+    if (!stack.length) { return; }
+    stack.pop();
+    applyOv();
+    history.back();
   }
-  window.addEventListener('popstate', function () { inHist = false; closeDom(); });
-  $('#scrim').addEventListener('click', closeOv);
+  function closeAll() {
+    var n = stack.length;
+    if (!n) { return; }
+    stack.length = 0;
+    applyOv();
+    history.go(-n);
+  }
+  window.addEventListener('popstate', function (e) {
+    var depth = (e.state && e.state.ov) || 0;
+    if (stack.length > depth) { stack.length = depth; applyOv(); }
+  });
 
   function openSheet(title, html, after) {
     $('#sheetTitle').textContent = title;
     $('#sheetBody').innerHTML = html;
     $('#sheetBody').scrollTop = 0;
-    showOv('sheet');
+    pushOv('sheet');
     if (after) { after(); }
   }
 
@@ -234,6 +243,8 @@
     $('#btnLeft').innerHTML = svg('menu');
     $('#btnRight').innerHTML = svg('more');
     $('#sheetBack').innerHTML = svg('back');
+    $('#leftBack').innerHTML = svg('back');
+    $('#rightBack').innerHTML = svg('back');
     $('#drLogo').innerHTML = svg('cross', 30);
     $('#drLogo2').innerHTML = svg('cross', 30);
 
@@ -258,9 +269,11 @@
     $('#miInstall').addEventListener('click', installApp);
     $('#miShare').addEventListener('click', shareApp);
 
-    $('#btnLeft').addEventListener('click', function () { openKind === 'left' ? closeOv() : showOv('left'); });
-    $('#btnRight').addEventListener('click', function () { openKind === 'right' ? closeOv() : showOv('right'); });
-    $('#sheetBack').addEventListener('click', closeOv);
+    $('#btnLeft').addEventListener('click', function () { pushOv('left'); });
+    $('#btnRight').addEventListener('click', function () { pushOv('right'); });
+    $('#sheetBack').addEventListener('click', backOv);
+    $('#leftBack').addEventListener('click', backOv);
+    $('#rightBack').addEventListener('click', backOv);
 
     $('#navToc').innerHTML = '<span class="pill">' + svg('list') + '</span><span>TOC</span>';
     $('#navFront').innerHTML = '<span class="pill">' + svg('home') + '</span><span>Front</span>';
@@ -275,14 +288,14 @@
   }
 
   /* ---------- views and navigation ---------- */
-  var cur = 'lock';
+  var cur = 'welcome';
   var view = $('#view'), main = $('#main');
 
   function go(id) {
     if (id !== 'front' && id !== 'toc' && !Book.find(id)) { id = 'front'; }
     cur = id;
     if (id !== 'front' && id !== 'toc') { put('ebook_last', id); }
-    closeOv();
+    closeAll();
     render();
     main.scrollTop = 0;
   }
@@ -293,7 +306,7 @@
     if (n >= 0 && n < ids.length) { go(ids[n]); }
   }
   function updateNav() {
-    var locked = cur === 'lock', ids = Book.ids(), i = ids.indexOf(cur);
+    var locked = cur === 'lock' || cur === 'welcome', ids = Book.ids(), i = ids.indexOf(cur);
     $('#navToc').classList.toggle('active', cur === 'toc');
     $('#navFront').classList.toggle('active', cur === 'front');
     $('#navToc').disabled = locked;
@@ -303,11 +316,39 @@
     document.body.classList.toggle('locked', locked);
   }
   function render() {
-    if (cur === 'lock') { renderLock(); }
+    if (cur === 'welcome') { renderWelcome(); }
+    else if (cur === 'lock') { renderLock(); }
     else if (cur === 'front') { renderFront(); }
     else if (cur === 'toc') { renderToc(); }
     else { renderPage(Book.find(cur)); }
     updateNav();
+  }
+
+  function renderWelcome() {
+    var rays = '', k;
+    for (k = 0; k < 12; k++) { rays += '<polygon points="180,150 169,-70 191,-70" transform="rotate(' + (k * 30) + ' 180 150)"/>'; }
+    var stars = [[40, 44, 0], [92, 84, 1.2], [300, 52, 0.6], [331, 112, 1.8], [250, 28, 2.2], [58, 142, 2.6], [311, 184, 0.9], [122, 30, 1.5]]
+      .map(function (s) { return '<circle class="tw" cx="' + s[0] + '" cy="' + s[1] + '" r="2.4" fill="#FFFFFF" style="animation-delay:' + s[2] + 's"/>'; }).join('');
+    var dots = [[70, 270, 0], [140, 280, 2], [215, 276, 4], [290, 272, 1], [180, 282, 3], [110, 274, 5]]
+      .map(function (s) { return '<circle class="pt" cx="' + s[0] + '" cy="' + s[1] + '" r="3" fill="#FFE3EC" style="animation-delay:' + s[2] + 's"/>'; }).join('');
+    view.innerHTML = '<div class="welcome"><div class="w-art" aria-hidden="true">' +
+      '<svg viewBox="0 0 360 320" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs><radialGradient id="wGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFE3EC" stop-opacity="0.95"/><stop offset="0.45" stop-color="#FF7BA3" stop-opacity="0.45"/><stop offset="1" stop-color="#DF1E5A" stop-opacity="0"/></radialGradient>' +
+      '<linearGradient id="wM1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B3124A"/><stop offset="1" stop-color="#6E0A2E"/></linearGradient>' +
+      '<linearGradient id="wM2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E0F3A"/><stop offset="1" stop-color="#4A0720"/></linearGradient>' +
+      '<linearGradient id="wM3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C0829"/><stop offset="1" stop-color="#2B0616"/></linearGradient></defs>' +
+      '<g class="w-rays" fill="#FFE3EC" fill-opacity="0.16">' + rays + '</g>' +
+      '<circle class="w-glow" cx="180" cy="150" r="130" fill="url(#wGlow)"/>' + stars +
+      '<g class="w-cross"><rect x="168" y="94" width="24" height="112" rx="9" fill="#FFFFFF"/><rect x="136" y="124" width="88" height="24" rx="9" fill="#FFFFFF"/></g>' +
+      '<path d="M0 250 L60 205 L110 235 L170 190 L230 238 L290 200 L360 245 L360 330 L0 330Z" fill="url(#wM1)"/>' +
+      '<path d="M0 276 L70 236 L130 268 L200 228 L270 272 L330 246 L360 262 L360 330 L0 330Z" fill="url(#wM2)"/>' + dots +
+      '<path d="M0 302 L80 272 L150 298 L230 268 L300 296 L360 282 L360 330 L0 330Z" fill="url(#wM3)"/></svg></div>' +
+      '<div class="w-body"><div class="w-kicker" style="animation-delay:.2s">' + esc(M.author) + '</div>' +
+      '<h2 class="w-title" style="animation-delay:.35s">' + esc(M.title) + '</h2>' +
+      '<div class="w-tag" style="animation-delay:.5s">Your breakthrough is coming.</div>' +
+      '<p class="w-text" style="animation-delay:.65s">Unlock your copy with the access code you received, then read online or offline.</p>' +
+      '<button class="btn light block w-cta" id="btnStart">Get Started ' + svg('next') + '</button></div></div>';
+    $('#btnStart').addEventListener('click', function () { cur = 'lock'; render(); main.scrollTop = 0; });
   }
 
   function renderLock() {
@@ -315,12 +356,23 @@
       '<h2>Unlock your book</h2>' +
       '<p class="muted">Enter the access code you received. Each code works on one device only.</p>' +
       '<div class="field"><label for="codeInput">Access code</label>' +
-      '<input id="codeInput" type="text" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="XXXX-XXXX"></div>' +
+      '<div class="pw"><input id="codeInput" type="password" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="Enter code">' +
+      '<button class="eye" id="btnEye" type="button" aria-label="Show code" aria-pressed="false">' + svg('eye') + '</button></div></div>' +
       '<button class="btn block" id="btnUnlock">Unlock Book</button>' +
-      '<button class="btn text" id="btnNeedCode">Need a code? Contact us</button></div>';
+      '<button class="btn text" id="btnNeedCode">Need a code? Contact us</button>' +
+      '<button class="btn text" id="btnWelcome">Back</button></div>';
     $('#btnUnlock').addEventListener('click', doUnlock);
     $('#codeInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { doUnlock(); } });
+    $('#btnEye').addEventListener('click', function () {
+      var inp = $('#codeInput'), show = inp.type === 'password';
+      inp.type = show ? 'text' : 'password';
+      this.setAttribute('aria-pressed', String(show));
+      this.setAttribute('aria-label', show ? 'Hide code' : 'Show code');
+      this.innerHTML = svg(show ? 'eyeoff' : 'eye');
+      inp.focus();
+    });
     $('#btnNeedCode').addEventListener('click', function () { openInfo('contact'); });
+    $('#btnWelcome').addEventListener('click', function () { cur = 'welcome'; render(); main.scrollTop = 0; });
   }
 
   function doUnlock() {
@@ -438,7 +490,6 @@
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
   window.addEventListener('appinstalled', function () { deferred = null; UI.toast('App installed', 'success'); });
   function installApp() {
-    closeOv();
     var standalone = window.matchMedia && matchMedia('(display-mode: standalone)').matches;
     if (standalone) { UI.dialog({ type: 'info', title: 'Already installed', message: 'You are using the installed app.' }); return; }
     if (deferred) {
@@ -452,7 +503,6 @@
     UI.dialog({ type: 'info', title: 'Install this app', message: 'Tap the three dots in Chrome, then choose Add to Home screen or Install app.' });
   }
   function shareApp() {
-    closeOv();
     var url = M.shareUrl || location.href.split('#')[0];
     if (navigator.share) { navigator.share({ title: M.title, text: M.shareText, url: url }).catch(function () {}); return; }
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -499,7 +549,7 @@
         });
       }
     } else {
-      cur = 'lock';
+      cur = 'welcome';
       render();
     }
   }
