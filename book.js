@@ -11,6 +11,10 @@
     edition: 'Edition 1.0, 2025',
     kicker: 'A Christian devotional',
 
+    /* LOGO: paste your hosted logo image URL here. It is used in the header, both
+       side menus and the front cover, always inside a circle with a rotating gear ring. */
+    logo: 'https://REPLACE-WITH-YOUR-HOSTED-URL/logo.png',
+
     about: [
       "Don't Give Up! is a faith-based devotional for anyone walking through a dark valley. Drawing on Jeremiah 29:11 and the stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, it shows how God's faithfulness prevails in every season of struggle.",
       'Each chapter ends with a short declaration you can speak aloud. Read one chapter at a time, or follow the Table of Contents in any order.'
