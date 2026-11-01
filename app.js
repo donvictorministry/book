@@ -12,6 +12,10 @@
   function get(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
   function put(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
+  /* Access rule: anyone can open Notepad and the to-do list, but only readers
+     who unlocked the book with an access code can use them. */
+  function hasAccess() { return Lock.hasToken() && Book.has(); }
+
   var ICON = {
     menu: 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z',
     more: 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z',
@@ -150,10 +154,17 @@
   /* ---------- overlays: each level has its own history entry, so Android back
      closes the page first, then the menu, then returns to the home page ---------- */
   var stack = [];
+  var routes = {}, activeRoute = null, navItems = [], menuBuilt = false, navCount = 0;
   function applyOv() {
     $('#drawerLeft').classList.toggle('open', stack.indexOf('left') > -1);
     $('#drawerRight').classList.toggle('open', stack.indexOf('right') > -1);
     $('#sheet').classList.toggle('open', stack.indexOf('sheet') > -1);
+    if (stack.indexOf('route') < 0 && activeRoute) {
+      var name = activeRoute, r = routes[name];
+      activeRoute = null;
+      removeGate();
+      if (r && r.close) { r.close(); }
+    }
   }
   function pushOv(kind) {
     if (stack[stack.length - 1] === kind) { return; }
@@ -178,6 +189,67 @@
     var depth = (e.state && e.state.ov) || 0;
     if (stack.length > depth) { stack.length = depth; applyOv(); }
   });
+
+  /* ---------- DV host shell: the interface notepad.js expects ---------- */
+  function removeGate() { var g = $('#npGate'); if (g) { g.remove(); } }
+  function showGate(name) {
+    var r = routes[name] || {}, label = r.title || 'This tool';
+    removeGate();
+    var g = document.createElement('div');
+    g.id = 'npGate';
+    g.className = 'np-gate';
+    g.innerHTML = '<div class="dlg" role="alertdialog" aria-modal="true"><div class="dlg-ic">' + svg('lock', 36) + '</div><h2></h2><p></p>' +
+      '<div class="dlg-actions"><button class="btn outline" id="gateClose">Close</button><button class="btn" id="gateCode">Enter code</button></div></div>';
+    $('h2', g).textContent = 'Access code needed';
+    $('p', g).textContent = label + ' is free to open, but only readers with an access code can use it.';
+    document.body.appendChild(g);
+    $('#gateClose').addEventListener('click', backOv);
+    $('#gateCode').addEventListener('click', goUnlock);
+  }
+  function goUnlock() {
+    closeAll();
+    cur = 'lock';
+    render();
+    main.scrollTop = 0;
+  }
+  function mountNavItem(o) {
+    var b = document.createElement('button');
+    b.id = o.id;
+    b.className = 'dr-item';
+    b.setAttribute('data-gated', '1');
+    b.innerHTML = o.html;
+    b.addEventListener('click', function () { window.DV.openRoute(o.key); });
+    var list = $('#rightList');
+    list.insertBefore(b, list.children[navCount] || null);
+    navCount++;
+  }
+  window.DV = {
+    toast: function (m) { UI.toast(m); },
+    route: function (name, cfg) { routes[name] = cfg; },
+    openRoute: function (name) {
+      var r = routes[name];
+      if (!r || activeRoute) { return; }
+      activeRoute = name;
+      r.open();
+      pushOv('route');
+      if (!hasAccess()) { showGate(name); }
+    },
+    closeRoute: function () { if (activeRoute) { backOv(); } },
+    addNavItem: function (o) {
+      navItems.push(o);
+      if (menuBuilt) { mountNavItem(o); refreshLocks(); }
+    },
+    addQuickAction: function () {}
+  };
+
+  function refreshLocks() {
+    var locked = !hasAccess();
+    $$('[data-gated]').forEach(function (b) {
+      var l = b.querySelector('.dr-lock');
+      if (locked && !l) { l = document.createElement('span'); l.className = 'dr-lock'; l.innerHTML = svg('lock', 22); b.appendChild(l); }
+      else if (!locked && l) { l.remove(); }
+    });
+  }
 
   function openSheet(title, html, after) {
     $('#sheetTitle').textContent = title;
@@ -265,12 +337,15 @@
     $$('[data-info]').forEach(function (b) { b.addEventListener('click', function () { openInfo(b.getAttribute('data-info')); }); });
     $('#swDark').addEventListener('click', function () { setTheme(theme() === 'dark' ? 'light' : 'dark'); });
     $('#fsRange').addEventListener('input', function () { setFont(parseInt(this.value, 10)); });
+    $('#miTodo').setAttribute('data-gated', '1');
+    menuBuilt = true; navCount = 0;
+    navItems.forEach(mountNavItem);
     $('#miTodo').addEventListener('click', openTodo);
     $('#miInstall').addEventListener('click', installApp);
     $('#miShare').addEventListener('click', shareApp);
 
     $('#btnLeft').addEventListener('click', function () { pushOv('left'); });
-    $('#btnRight').addEventListener('click', function () { pushOv('right'); });
+    $('#btnRight').addEventListener('click', function () { refreshLocks(); pushOv('right'); });
     $('#sheetBack').addEventListener('click', backOv);
     $('#leftBack').addEventListener('click', backOv);
     $('#rightBack').addEventListener('click', backOv);
@@ -446,38 +521,49 @@
     openSheet('To-do list', '<div id="todoBox"></div>', drawTodo);
   }
   function drawTodo() {
+    var ok = hasAccess(), dis = ok ? '' : ' disabled';
     var t = todos(), done = t.filter(function (x) { return x.done; }).length;
-    var h = '<div class="todo-add"><input id="todoText" type="text" maxlength="120" placeholder="Add a task" enterkeyhint="done" aria-label="New task">' +
-      '<button class="btn" id="todoAdd" aria-label="Add task">' + svg('add') + '</button></div>';
+    var h = '';
+    if (!ok) {
+      h += '<div class="gate-note"><div class="dlg-ic">' + svg('lock', 34) + '</div>' +
+        '<p>The to-do list is free to open, but only readers with an access code can use it.</p>' +
+        '<button class="btn block" id="todoGate">Enter access code</button></div>';
+    }
+    h += '<div class="todo-add"><input id="todoText" type="text" maxlength="120" placeholder="Add a task" enterkeyhint="done" aria-label="New task"' + dis + '>' +
+      '<button class="btn" id="todoAdd" aria-label="Add task"' + dis + '>' + svg('add') + '</button></div>';
     h += '<p class="todo-sum">' + (t.length ? done + ' of ' + t.length + ' done' : 'No tasks yet. Add your reading or prayer plan.') + '</p>';
     t.forEach(function (x) {
-      h += '<div class="todo-item' + (x.done ? ' done' : '') + '"><button class="iconbtn" data-tg="' + x.id + '" aria-label="Mark done">' + svg(x.done ? 'boxon' : 'boxoff') +
-        '</button><span class="tx">' + esc(x.text) + '</span><button class="iconbtn" data-rm="' + x.id + '" aria-label="Delete task">' + svg('del') + '</button></div>';
+      h += '<div class="todo-item' + (x.done ? ' done' : '') + '"><button class="iconbtn" data-tg="' + x.id + '" aria-label="Mark done"' + dis + '>' + svg(x.done ? 'boxon' : 'boxoff') +
+        '</button><span class="tx">' + esc(x.text) + '</span><button class="iconbtn" data-rm="' + x.id + '" aria-label="Delete task"' + dis + '>' + svg('del') + '</button></div>';
     });
-    if (done) { h += '<div style="margin-top:16px"><button class="btn outline block" id="todoClear">Clear completed</button></div>'; }
+    if (done && ok) { h += '<div style="margin-top:16px"><button class="btn outline block" id="todoClear">Clear completed</button></div>'; }
     $('#todoBox').innerHTML = h;
+    if ($('#todoGate')) { $('#todoGate').addEventListener('click', goUnlock); }
     $('#todoAdd').addEventListener('click', addTodo);
     $('#todoText').addEventListener('keydown', function (e) { if (e.key === 'Enter') { addTodo(); } });
     $$('[data-tg]').forEach(function (b) { b.addEventListener('click', function () {
+      if (!hasAccess()) { return; }
       var list = todos(); list.forEach(function (x) { if (String(x.id) === b.getAttribute('data-tg')) { x.done = !x.done; } });
       saveTodos(list); drawTodo();
     }); });
     $$('[data-rm]').forEach(function (b) { b.addEventListener('click', function () {
-      UI.confirm('Delete task?', 'This task will be removed from your list.', 'Delete', true).then(function (ok) {
-        if (!ok) { return; }
+      if (!hasAccess()) { return; }
+      UI.confirm('Delete task?', 'This task will be removed from your list.', 'Delete', true).then(function (ok2) {
+        if (!ok2) { return; }
         saveTodos(todos().filter(function (x) { return String(x.id) !== b.getAttribute('data-rm'); }));
         drawTodo(); UI.toast('Task deleted', 'success');
       });
     }); });
     if ($('#todoClear')) { $('#todoClear').addEventListener('click', function () {
-      UI.confirm('Clear completed?', 'All finished tasks will be removed.', 'Clear', true).then(function (ok) {
-        if (!ok) { return; }
+      UI.confirm('Clear completed?', 'All finished tasks will be removed.', 'Clear', true).then(function (ok2) {
+        if (!ok2) { return; }
         saveTodos(todos().filter(function (x) { return !x.done; }));
         drawTodo(); UI.toast('Completed tasks cleared', 'success');
       });
     }); }
   }
   function addTodo() {
+    if (!hasAccess()) { UI.toast('An access code is needed to use the to-do list', 'error'); return; }
     var inp = $('#todoText'), v = inp.value.trim();
     if (!v) { UI.toast('Type a task first', 'error'); return; }
     var list = todos(); list.push({ id: Date.now(), text: v, done: false });
@@ -530,6 +616,7 @@
         render();
         Lock.verify(false).then(function (r) {
           if (!r.ok) {
+            closeAll();
             cur = 'lock';
             render();
             UI.dialog({ type: 'error', title: 'Access ended', message: Lock.message(r.error) });
