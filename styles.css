@@ -518,3 +518,44 @@ input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .gate-note { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 20px; margin-bottom: 16px; border-radius: 20px; background: var(--tonal); }
 .gate-note p { line-height: 1.6; }
 .todo-add input:disabled, .todo-add .btn:disabled { opacity: 0.45; }
+
+/* ---------- Circular logo / photo with rotating gear ring ---------- */
+.gear-wrap { position: relative; display: inline-block; width: var(--sz, 44px); height: var(--sz, 44px); flex: none; --gear: var(--primary-text); }
+.gear-ring { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--gear); animation: gspin 14s linear infinite; }
+.gear-img { position: absolute; top: 14%; left: 14%; width: 72%; height: 72%; border-radius: 50%; object-fit: cover; background: var(--tonal); display: block; transform: none; }
+@keyframes gspin { to { transform: rotate(360deg); } }
+.cover .gear-wrap { --gear: #FFFFFF; }
+.dev-wrap { display: flex; justify-content: center; margin: 4px auto 18px; }
+.brand { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; font-size: calc(var(--fs) + 2px); line-height: 1.1; }
+.brand-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- Welcome: pitch, features, sticky actions ---------- */
+.welcome { overflow: visible; }
+.w-art { flex: none; height: 250px; min-height: 250px; overflow: hidden; }
+.w-body { padding: 8px 24px 8px; }
+.w-feats { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; text-align: left; }
+.w-feat { display: flex; gap: 14px; align-items: flex-start; padding: 14px; border-radius: 18px; background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.16); }
+.w-feat.featured { background: linear-gradient(135deg, rgba(223, 30, 90, 0.6), rgba(142, 15, 58, 0.6)); border-color: #FF8FB1; }
+.w-feat-ic { flex: none; width: 46px; height: 46px; border-radius: 14px; background: rgba(255, 255, 255, 0.14); display: grid; place-items: center; color: #FFD6E3; }
+.w-feat.featured .w-feat-ic { background: #FFFFFF; color: #B3124A; }
+.w-feat-t { font-weight: 700; }
+.w-feat-d { color: #FFD6E3; line-height: 1.45; }
+.w-badge { display: inline-block; margin-left: 4px; padding: 0 10px; border-radius: 14px; background: #FFD54A; color: #3A0A1F; font-weight: 700; line-height: 1.5; }
+.w-reach { width: 100%; text-align: center; margin-top: 14px; }
+.w-reach h3 { font-size: calc(var(--fs) + 3px); margin-bottom: 6px; }
+.w-reach p { line-height: 1.55; color: #FFD6E3; }
+.w-bar { position: sticky; bottom: 0; z-index: 5; display: flex; gap: 12px; padding: 18px 20px 10px; background: linear-gradient(180deg, rgba(43, 6, 22, 0) 0, #2B0616 30%); animation: wup 0.8s cubic-bezier(0.2, 0, 0, 1) 1s both; }
+.w-go { flex: 1 1 0; min-width: 0; padding: 0 10px; line-height: 1.15; }
+.w-bar .w-go:first-child { flex-grow: 1.15; }
+
+/* ---------- Safe gap at the bottom of every page (old Android phones) ---------- */
+:root { --gap: 28px; --bot: calc(env(safe-area-inset-bottom, 0px) + var(--gap)); }
+.cover { padding-bottom: calc(40px + var(--bot)); }
+.lock { padding-bottom: calc(40px + var(--bot)); }
+.toc { padding-bottom: calc(40px + var(--bot)); }
+.pager { padding-bottom: calc(36px + var(--bot)); }
+.w-bar { padding-bottom: calc(10px + var(--bot)); }
+.sheet-body { padding-bottom: calc(40px + var(--bot)); }
+.dr-scroll { padding-bottom: var(--bot); }
+.admin-wrap { padding-bottom: calc(48px + var(--bot)); }
+.dv-np-scroll, .dv-np-list { padding-bottom: var(--bot); }
