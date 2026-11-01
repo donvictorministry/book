@@ -49,6 +49,9 @@
     boxoff: 'M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z',
     boxon: 'M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z',
     cross: 'M10 2h4v7h7v4h-7v9h-4v-9H3V9h7z',
+    edit: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z',
+    book: 'M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z',
+    offline: 'M12 2.02c-5.51 0-9.98 4.47-9.98 9.98s4.47 9.98 9.98 9.98 9.98-4.47 9.98-9.98S17.51 2.02 12 2.02zM11.48 20v-6.26H8L13 4v6.26h3.35L11.48 20z',
     eye: 'M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z',
     eyeoff: 'M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'
   };
@@ -154,7 +157,7 @@
   /* ---------- overlays: each level has its own history entry, so Android back
      closes the page first, then the menu, then returns to the home page ---------- */
   var stack = [];
-  var routes = {}, activeRoute = null, navItems = [], menuBuilt = false, navCount = 0;
+  var routes = {}, activeRoute = null, navItems = [], quickActions = [], menuBuilt = false, navCount = 0;
   function applyOv() {
     $('#drawerLeft').classList.toggle('open', stack.indexOf('left') > -1);
     $('#drawerRight').classList.toggle('open', stack.indexOf('right') > -1);
@@ -239,7 +242,7 @@
       navItems.push(o);
       if (menuBuilt) { mountNavItem(o); refreshLocks(); }
     },
-    addQuickAction: function () {}
+    addQuickAction: function (o) { if (o && o.route) { quickActions.push(o); } }
   };
 
   function refreshLocks() {
@@ -259,12 +262,52 @@
     if (after) { after(); }
   }
 
+  /* ---------- circular logo / photo with a rotating gear ring ---------- */
+  var GEAR_D = (function () {
+    var n = 12, c = 50, ro = 49, rr = 42, rh = 36, step = Math.PI * 2 / n, d = '', i;
+    function pt(r, a) { return (c + r * Math.cos(a)).toFixed(2) + ' ' + (c + r * Math.sin(a)).toFixed(2); }
+    for (i = 0; i < n; i++) {
+      var a = i * step;
+      d += (i ? 'L' : 'M') + pt(rr, a) + 'L' + pt(ro, a + step * 0.14) + 'L' + pt(ro, a + step * 0.36) + 'L' + pt(rr, a + step * 0.5);
+    }
+    d += 'Z';
+    d += 'M' + (c - rh) + ' ' + c + 'A' + rh + ' ' + rh + ' 0 1 0 ' + (c + rh) + ' ' + c + 'A' + rh + ' ' + rh + ' 0 1 0 ' + (c - rh) + ' ' + c + 'Z';
+    return d;
+  })();
+  var FALLBACK = {
+    logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="#DF1E5A"/><path fill="#FFFFFF" d="M10 4h4v6h6v4h-6v7h-4v-7H4v-4h6z"/></svg>'),
+    person: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="#F7C6D6"/><path fill="#DF1E5A" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>')
+  };
+  /* The ring turns. The picture inside is a separate element and never turns. */
+  function gearInner(src, fb, alt) {
+    return '<svg class="gear-ring" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="' + GEAR_D + '"/></svg>' +
+      '<img class="gear-img" data-fb="' + fb + '" alt="' + esc(alt || '') + '" src="' + esc(src) + '">';
+  }
+  function fixImgs(root) {
+    $$('img.gear-img', root).forEach(function (img) {
+      var fb = FALLBACK[img.getAttribute('data-fb')] || FALLBACK.logo;
+      img.onerror = function () { img.onerror = null; img.src = fb; };
+      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src') !== fb) { img.onerror(); }
+    });
+  }
+  function gearMarkup(size, src, fb, alt) {
+    return '<span class="gear-wrap" style="--sz:' + size + 'px">' + gearInner(src, fb, alt) + '</span>';
+  }
+  function mountGears() {
+    $$('.gear-slot').forEach(function (s) {
+      s.style.setProperty('--sz', (s.getAttribute('data-size') || '44') + 'px');
+      s.innerHTML = gearInner(M.logo, 'logo', '');
+      fixImgs(s);
+    });
+  }
+
   /* ---------- information pages (left menu) ---------- */
   var M = Book.meta;
-  function ctaRow() {
-    var wa = 'https://wa.me/' + String(M.whatsapp).replace(/[^0-9]/g, '');
+  function ctaRow(msg) {
+    var wa = 'https://wa.me/' + String(M.whatsapp).replace(/[^0-9]/g, '') + (msg ? '?text=' + encodeURIComponent(msg) : '');
+    var mail = 'mailto:' + M.email + (msg ? '?subject=' + encodeURIComponent('Access code request') + '&body=' + encodeURIComponent(msg) : '');
     return '<div class="cta-row">' +
-      '<a class="cta email" href="mailto:' + esc(M.email) + '" aria-label="Email us">' + svg('mail', 30) + '</a>' +
+      '<a class="cta email" href="' + esc(mail) + '" aria-label="Email us">' + svg('mail', 30) + '</a>' +
       '<a class="cta whatsapp" href="' + esc(wa) + '" target="_blank" rel="noopener" aria-label="WhatsApp us">' + svg('whatsapp', 30) + '</a>' +
       '<a class="cta facebook" href="' + esc(M.facebook) + '" target="_blank" rel="noopener" aria-label="Facebook">' + svg('facebook', 30) + '</a>' +
       '<a class="cta phone" href="tel:' + esc(M.phone) + '" aria-label="Call us">' + svg('phone', 30) + '</a></div>';
@@ -276,12 +319,9 @@
     } },
     dev: { title: 'About Developer', html: function () {
       var d = M.developer;
-      return '<div class="info center"><img class="dev-photo" id="devPhoto" alt="' + esc(d.name) + '" src="' + esc(d.photo) + '">' +
+      return '<div class="info center"><div class="dev-wrap">' + gearMarkup(168, d.photo, 'person', d.name) + '</div>' +
         '<h3>' + esc(d.name) + '</h3><p class="muted">' + esc(d.role) + '</p><p>' + esc(d.bio) + '</p>' + ctaRow() + '</div>';
-    }, after: function () {
-      var img = $('#devPhoto');
-      if (img) { img.onerror = function () { img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="#F7C6D6"/><path fill="#DF1E5A" d="' + ICON.person + '"/></svg>'); }; }
-    } },
+    }, after: function () { fixImgs($('#sheetBody')); } },
     how: { title: 'How to Use', html: function () {
       return '<div class="info"><h3>Unlock</h3><ol><li>Type the access code you received and tap Unlock Book.</li><li>Each code works on one device only. Do not share it.</li></ol>' +
         '<h3>Move through the book</h3><ul><li><b>TOC</b> opens the Table of Contents.</li><li><b>Front</b> returns to the front page.</li><li><b>Prev</b> and <b>Next</b> turn the page.</li><li><b>Dark</b> switches dark and light mode.</li></ul>' +
@@ -302,7 +342,7 @@
     } },
     contact: { title: 'Contact Us', html: function () {
       return '<div class="info"><p>Need a prayer, a testimony to share, an access code, or help with the app? Reach out. We reply within 48 hours.</p>' +
-        '<p><b>Email:</b> ' + esc(M.email) + '</p><p><b>Phone:</b> ' + esc(M.phone) + '</p>' + ctaRow() + '</div>';
+        '<p><b>Email:</b> ' + esc(M.email) + '</p><p><b>Phone:</b> ' + esc(M.phone) + '</p>' + ctaRow(CODE_MSG) + '</div>';
     } }
   };
   function openInfo(key) {
@@ -317,8 +357,7 @@
     $('#sheetBack').innerHTML = svg('back');
     $('#leftBack').innerHTML = svg('back');
     $('#rightBack').innerHTML = svg('back');
-    $('#drLogo').innerHTML = svg('cross', 30);
-    $('#drLogo2').innerHTML = svg('cross', 30);
+    mountGears();
 
     var left = [['info', 'About the Book', 'about'], ['person', 'About Developer', 'dev'], ['help', 'How to Use', 'how'],
       ['doc', 'Terms of Use', 'terms'], ['heart', 'Support Us', 'support'], ['mail', 'Contact Us', 'contact']];
@@ -399,7 +438,18 @@
     updateNav();
   }
 
+  var CODE_MSG = "Hello, I would like to get an access code for Don't Give Up.";
   function renderWelcome() {
+    var feats = [
+      ['edit', 'Private Notepad', 'Write prayers and ideas, lock notes with a PIN, and share them.', true],
+      ['book', 'Chapters that build faith', 'Every chapter ends with a declaration you can speak aloud.'],
+      ['todo', 'To-do list', 'Plan your daily reading and prayer time.'],
+      ['offline', 'Read offline', 'Open your book anywhere, even without internet.'],
+      ['moon', 'Made for comfort', 'Dark mode and text size you can adjust.']
+    ].map(function (f) {
+      return '<div class="w-feat' + (f[3] ? ' featured' : '') + '"><span class="w-feat-ic">' + svg(f[0], 26) + '</span><div><div class="w-feat-t">' + f[1] +
+        (f[3] ? ' <span class="w-badge">Powerful</span>' : '') + '</div><div class="w-feat-d">' + f[2] + '</div></div></div>';
+    }).join('');
     var rays = '', k;
     for (k = 0; k < 12; k++) { rays += '<polygon points="180,150 169,-70 191,-70" transform="rotate(' + (k * 30) + ' 180 150)"/>'; }
     var stars = [[40, 44, 0], [92, 84, 1.2], [300, 52, 0.6], [331, 112, 1.8], [250, 28, 2.2], [58, 142, 2.6], [311, 184, 0.9], [122, 30, 1.5]]
@@ -420,10 +470,14 @@
       '<path d="M0 302 L80 272 L150 298 L230 268 L300 296 L360 282 L360 330 L0 330Z" fill="url(#wM3)"/></svg></div>' +
       '<div class="w-body"><div class="w-kicker" style="animation-delay:.2s">' + esc(M.author) + '</div>' +
       '<h2 class="w-title" style="animation-delay:.35s">' + esc(M.title) + '</h2>' +
-      '<div class="w-tag" style="animation-delay:.5s">Your breakthrough is coming.</div>' +
-      '<p class="w-text" style="animation-delay:.65s">Unlock your copy with the access code you received, then read online or offline.</p>' +
-      '<button class="btn light block w-cta" id="btnStart">Get Started ' + svg('next') + '</button></div></div>';
+      '<div class="w-tag" style="animation-delay:.5s">Your breakthrough is closer than you think.</div>' +
+      '<p class="w-text" style="animation-delay:.65s">This full devotional and its powerful tools are for readers with a personal access code. Reach out today and receive yours.</p>' +
+      '<div class="w-feats" style="animation-delay:.8s">' + feats + '</div>' +
+      '<div class="w-reach" style="animation-delay:.95s"><h3>Ready to unlock it?</h3>' +
+      '<p>Send us a message and receive your personal access code. One reader, one device, yours to keep.</p>' + ctaRow(CODE_MSG) + '</div></div>' +
+      '<div class="w-bar"><button class="btn light w-go" id="btnStart">Get Started</button><button class="btn ghost w-go" id="btnGetCode">Get a code</button></div></div>';
     $('#btnStart').addEventListener('click', function () { cur = 'lock'; render(); main.scrollTop = 0; });
+    $('#btnGetCode').addEventListener('click', function () { openInfo('contact'); });
   }
 
   function renderLock() {
@@ -470,7 +524,11 @@
 
   function renderFront() {
     var ids = Book.ids(), last = Book.find(get('ebook_last', ''));
-    view.innerHTML = '<div class="cover"><div>' + svg('cross', 72) + '</div>' +
+    var qa = quickActions.slice().sort(function (a, b) { return (a.order || 0) - (b.order || 0); }).map(function (q) {
+      var rt = routes[q.route];
+      return '<button class="btn ghost block" data-qa="' + esc(q.route) + '"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + q.icon + '</svg>' + esc((rt && rt.title) || q.label) + '</button>';
+    }).join('');
+    view.innerHTML = '<div class="cover"><div>' + gearMarkup(116, M.logo, 'logo', '') + '</div>' +
       '<p class="cover-ed">' + esc(M.kicker) + '</p>' +
       '<h2 class="cover-title">' + esc(M.title) + '</h2>' +
       '<p class="cover-sub">' + esc(M.subtitle) + '</p>' +
@@ -478,7 +536,10 @@
       '<p class="cover-ed">' + esc(M.edition) + '</p>' +
       '<div class="cover-actions"><button class="btn light block" id="cvStart">Start Reading</button>' +
       (last ? '<button class="btn ghost block" id="cvCont">Continue: ' + esc(last.title) + '</button>' : '') +
+      qa +
       '<button class="btn ghost block" id="cvToc">Table of Contents</button></div></div>';
+    fixImgs(view);
+    $$('[data-qa]').forEach(function (b) { b.addEventListener('click', function () { DV.openRoute(b.getAttribute('data-qa')); }); });
     $('#cvStart').addEventListener('click', function () { if (ids[1]) { go(ids[1]); } });
     if (last) { $('#cvCont').addEventListener('click', function () { go(last.id); }); }
     $('#cvToc').addEventListener('click', function () { go('toc'); });
@@ -486,11 +547,8 @@
 
   function renderToc() {
     var h = '<div class="toc"><h2>Table of Contents</h2>';
-    Book.sections().forEach(function (s) {
-      h += '<div class="toc-sec">' + esc(s.name) + '</div>';
-      s.items.forEach(function (c) {
-        h += '<button class="toc-item' + (c.id === get('ebook_last', '') ? ' current' : '') + '" data-id="' + esc(c.id) + '"><span>' + esc(c.title) + '</span>' + svg('next') + '</button>';
-      });
+    Book.list().forEach(function (c) {
+      h += '<button class="toc-item' + (c.id === get('ebook_last', '') ? ' current' : '') + '" data-id="' + esc(c.id) + '"><span>' + esc(c.title) + '</span>' + svg('next') + '</button>';
     });
     view.innerHTML = h + '</div>';
     $$('.toc-item').forEach(function (b) { b.addEventListener('click', function () { go(b.getAttribute('data-id')); }); });
@@ -498,7 +556,7 @@
 
   function renderPage(ch) {
     var ids = Book.ids(), i = ids.indexOf(ch.id);
-    var h = '<article class="page"><div class="eyebrow">' + esc(ch.section) + '</div><h2>' + esc(ch.title) + '</h2>';
+    var h = '<article class="page"><h2>' + esc(ch.title) + '</h2>';
     Book.parse(ch.body).forEach(function (b) {
       if (b.t === 'quote') { h += '<blockquote class="quote"><p>' + esc(b.text) + '</p>' + (b.cite ? '<cite>' + esc(b.cite) + '</cite>' : '') + '</blockquote>'; }
       else if (b.t === 'sub') { h += '<h3 class="sub">' + esc(b.text) + '</h3>'; }
