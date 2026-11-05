@@ -17,8 +17,8 @@
       "Don't Give Up! is more than a devotional; it is a heartfelt reminder that your present struggles do not define your future, and your darkest season is never beyond the reach of God's faithfulness.",
       'Inspired by Jeremiah 29:11 and the powerful biblical stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional offers hope, encouragement, and renewed strength for anyone navigating life\'s valleys. Through their experiences, you will discover that delays are not denials, setbacks are not the end, and even in seasons when God seems silent, He is still at work.'
       'Whether you are battling disappointment, facing uncertainty, enduring hardship, or simply struggling to find the strength to keep going, these pages will encourage you to hold on to God\'s promises, trust His timing, and keep your faith alive.'
-      'Each chapter concludes with a short, faith-filled declaration designed to strengthen your spirit and help you speak God's promises over your life.'
-      'Read one chapter at a time, or explore the chapters in any order using the Table of Contents. Wherever you begin, let each reading remind you of one enduring truth: Your story is not over. God is still faithful. Never Give Up!'
+      'Each chapter concludes with a short, faith-filled declaration designed to strengthen your spirit and help you speak God\'s promises over your life.'
+      'Read one chapter at a time, or explore the chapters in any order using the Table of Contents. Wherever you begin, let each reading remind you of one enduring truth: Your story is not over. God is still faithful. Don't Give Up!'
  
   ],
 
