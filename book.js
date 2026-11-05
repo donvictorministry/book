@@ -15,19 +15,19 @@
 logo: 'https://app.donvictorministry.org.ng/book/ebook-icon.png',
 
 about: [
-  "<strong>Don't Give Up!</strong> is more than a devotional; it is a heartfelt reminder that your present struggles do not define your future. No matter how dark the valley may seem, God's faithfulness remains constant.",
+  "𝗗𝗢𝗡'𝗧 𝗚𝗜𝗩𝗘 𝗨𝗣!\n\nMore than a devotional, this is a heartfelt reminder that your present struggles do not define your future. No matter how dark the valley may seem, God's faithfulness remains constant.",
 
-  "Drawing on <strong>Jeremiah 29:11</strong> and the inspiring biblical stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional reveals how God remains faithful through life's most difficult seasons.",
+  "𝗕𝗜𝗕𝗟𝗜𝗖𝗔𝗟 𝗜𝗡𝗦𝗣𝗜𝗥𝗔𝗧𝗜𝗢𝗡\n\nDrawing on Jeremiah 29:11 and the inspiring stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional reveals how God remains faithful through life's most difficult seasons.",
 
-  "<strong>Through these powerful biblical experiences, you will discover that:</strong><ul><li>Delays do not mean God has forgotten you.</li><li>Setbacks do not determine your final destination.</li><li>God is still at work, even when you cannot see it.</li><li>Your circumstances do not have the final say over your future.</li></ul>",
+  "𝗪𝗛𝗔𝗧 𝗬𝗢𝗨 𝗪𝗜𝗟𝗟 𝗗𝗜𝗦𝗖𝗢𝗩𝗘𝗥\n\n• Delays do not mean God has forgotten you.\n\n• Setbacks do not determine your final destination.\n\n• God is still at work, even when you cannot see it.\n\n• Your circumstances do not have the final say over your future.",
 
-  "Whether you are battling disappointment, facing uncertainty, enduring hardship, or struggling to find the strength to keep going, these pages will encourage you to <strong>hold on to God's promises, trust His timing, and keep your faith alive.</strong>",
+  "𝗔 𝗪𝗢𝗥𝗗 𝗢𝗙 𝗘𝗡𝗖𝗢𝗨𝗥𝗔𝗚𝗘𝗠𝗘𝗡𝗧\n\nWhether you are battling disappointment, facing uncertainty, enduring hardship, or struggling to find the strength to keep going, these pages will encourage you to hold on to God's promises, trust His timing, and keep your faith alive.",
 
-  "<strong>A declaration of faith closes every chapter.</strong> These short declarations are designed to strengthen your spirit and help you speak God's promises over your life.",
+  "𝗦𝗣𝗘𝗔𝗞 𝗙𝗔𝗜𝗧𝗛 𝗢𝗩𝗘𝗥 𝗬𝗢𝗨𝗥 𝗟𝗜𝗙𝗘\n\nEach chapter concludes with a short declaration of faith designed to strengthen your spirit and help you speak God's promises over your life.",
 
-  "<strong>Read at your own pace.</strong> Explore one chapter at a time or use the Table of Contents to navigate directly to any chapter.",
+  "𝗥𝗘𝗔𝗗 𝗔𝗧 𝗬𝗢𝗨𝗥 𝗢𝗪𝗡 𝗣𝗔𝗖𝗘\n\nRead one chapter at a time or explore the chapters in any order using the Table of Contents.",
 
-  "<strong>Your story is not over. God is still faithful. Don't give up!</strong>"
+  "𝗬𝗢𝗨𝗥 𝗦𝗧𝗢𝗥𝗬 𝗜𝗦 𝗡𝗢𝗧 𝗢𝗩𝗘𝗥.\n\nGod is still faithful. Don't give up!"
 ],
 
 /* Contact */
