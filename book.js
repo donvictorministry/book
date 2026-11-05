@@ -15,21 +15,21 @@
 logo: 'https://app.donvictorministry.org.ng/book/ebook-icon.png',
 
 about: [
-  "Don't Give Up is more than a devotional; it is a heartfelt reminder that your present struggles do not define your future.",
+  "<strong>Don't Give Up!</strong> is more than a devotional; it is a heartfelt reminder that your present struggles do not define your future. No matter how dark the valley may seem, God's faithfulness remains constant.",
 
-  "Inspired by Jeremiah 29:11 and the powerful biblical stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional offers hope, encouragement, and renewed strength.",
+  "Drawing on <strong>Jeremiah 29:11</strong> and the inspiring biblical stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional reveals how God remains faithful through life's most difficult seasons.",
 
-  "Through their experiences, you will discover that delays are not denials, setbacks are not the end, and even when God seems silent, He is still at work.",
+  "<strong>Through these powerful biblical experiences, you will discover that:</strong><ul><li>Delays do not mean God has forgotten you.</li><li>Setbacks do not determine your final destination.</li><li>God is still at work, even when you cannot see it.</li><li>Your circumstances do not have the final say over your future.</li></ul>",
 
-  "Whether you are battling disappointment, facing uncertainty, enduring hardship, or struggling to find the strength to keep going, these pages will encourage you to hold on to God's promises, trust His timing, and keep your faith alive.",
+  "Whether you are battling disappointment, facing uncertainty, enduring hardship, or struggling to find the strength to keep going, these pages will encourage you to <strong>hold on to God's promises, trust His timing, and keep your faith alive.</strong>",
 
-  "Each chapter concludes with a short, faith-filled declaration designed to strengthen your spirit and help you speak God's promises over your life.",
+  "<strong>A declaration of faith closes every chapter.</strong> These short declarations are designed to strengthen your spirit and help you speak God's promises over your life.",
 
-  "Read one chapter at a time, or explore the chapters in any order using the Table of Contents.",
+  "<strong>Read at your own pace.</strong> Explore one chapter at a time or use the Table of Contents to navigate directly to any chapter.",
 
-  "Your story is not over. God is still faithful. Don't give up!"
+  "<strong>Your story is not over. God is still faithful. Don't give up!</strong>"
 ],
-  
+
 /* Contact */
     email: 'donvictorministry@gmail.com',
     phone: '+2347035794649',
