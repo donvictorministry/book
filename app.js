@@ -324,7 +324,7 @@
     }, after: function () { fixImgs($('#sheetBody')); } },
     how: { title: 'How to Use', html: function () {
       return '<div class="info"><h3>Unlock</h3><ol><li>Type the access code you received and tap Unlock Book.</li><li>Each code works on one device only. Do not share it.</li></ol>' +
-        '<h3>Move through the book</h3><ul><li><b>TOC</b> opens the Table of Contents.</li><li><b>Front</b> returns to the front page.</li><li><b>Prev</b> and <b>Next</b> turn the page.</li><li><b>Dark</b> switches dark and light mode.</li></ul>' +
+        '<h3>Move through the book</h3><ul><li><b>TOC</b> opens the Table of Contents.</li><li><b>Home</b> returns to the home page.</li><li><b>Prev</b> and <b>Next</b> turn the page.</li><li><b>Dark</b> switches dark and light mode.</li></ul>' +
         '<h3>Menus</h3><ul><li>The left menu has information about the book and the ministry.</li><li>The right menu has text size, dark mode, your to-do list, Install App and Share App.</li></ul>' +
         '<h3>Offline</h3><p>After you unlock the book once, it works without internet. It checks your access again when you are online.</p></div>';
     } },
@@ -390,7 +390,7 @@
     $('#rightBack').addEventListener('click', backOv);
 
     $('#navToc').innerHTML = '<span class="pill">' + svg('list') + '</span><span>TOC</span>';
-    $('#navFront').innerHTML = '<span class="pill">' + svg('home') + '</span><span>Front</span>';
+    $('#navFront').innerHTML = '<span class="pill">' + svg('home') + '</span><span>Home</span>';
     $('#navPrev').innerHTML = '<span class="pill">' + svg('prev') + '</span><span>Prev</span>';
     $('#navNext').innerHTML = '<span class="pill">' + svg('next') + '</span><span>Next</span>';
     $('#btnDark').innerHTML = '<span class="pill"></span><span class="lbl">Dark</span>';
@@ -439,45 +439,18 @@
   }
 
   var CODE_MSG = "Hello, I would like to get an access code for Don't Give Up.";
+  /* The cover page lives in cover-page.js. It is optional: if that file is missing
+     or broken, the app skips it and opens the access-code screen. */
   function renderWelcome() {
-    var feats = [
-      ['edit', 'Private Notepad', 'Write prayers and ideas, lock notes with a PIN, and share them.', true],
-      ['book', 'Chapters that build faith', 'Every chapter ends with a declaration you can speak aloud.'],
-      ['todo', 'To-do list', 'Plan your daily reading and prayer time.'],
-      ['offline', 'Read offline', 'Open your book anywhere, even without internet.'],
-      ['moon', 'Made for comfort', 'Dark mode and text size you can adjust.']
-    ].map(function (f) {
-      return '<div class="w-feat' + (f[3] ? ' featured' : '') + '"><span class="w-feat-ic">' + svg(f[0], 26) + '</span><div><div class="w-feat-t">' + f[1] +
-        (f[3] ? ' <span class="w-badge">Powerful</span>' : '') + '</div><div class="w-feat-d">' + f[2] + '</div></div></div>';
-    }).join('');
-    var rays = '', k;
-    for (k = 0; k < 12; k++) { rays += '<polygon points="180,150 169,-70 191,-70" transform="rotate(' + (k * 30) + ' 180 150)"/>'; }
-    var stars = [[40, 44, 0], [92, 84, 1.2], [300, 52, 0.6], [331, 112, 1.8], [250, 28, 2.2], [58, 142, 2.6], [311, 184, 0.9], [122, 30, 1.5]]
-      .map(function (s) { return '<circle class="tw" cx="' + s[0] + '" cy="' + s[1] + '" r="2.4" fill="#FFFFFF" style="animation-delay:' + s[2] + 's"/>'; }).join('');
-    var dots = [[70, 270, 0], [140, 280, 2], [215, 276, 4], [290, 272, 1], [180, 282, 3], [110, 274, 5]]
-      .map(function (s) { return '<circle class="pt" cx="' + s[0] + '" cy="' + s[1] + '" r="3" fill="#FFE3EC" style="animation-delay:' + s[2] + 's"/>'; }).join('');
-    view.innerHTML = '<div class="welcome"><div class="w-art" aria-hidden="true">' +
-      '<svg viewBox="0 0 360 320" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">' +
-      '<defs><radialGradient id="wGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFE3EC" stop-opacity="0.95"/><stop offset="0.45" stop-color="#FF7BA3" stop-opacity="0.45"/><stop offset="1" stop-color="#DF1E5A" stop-opacity="0"/></radialGradient>' +
-      '<linearGradient id="wM1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B3124A"/><stop offset="1" stop-color="#6E0A2E"/></linearGradient>' +
-      '<linearGradient id="wM2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E0F3A"/><stop offset="1" stop-color="#4A0720"/></linearGradient>' +
-      '<linearGradient id="wM3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C0829"/><stop offset="1" stop-color="#2B0616"/></linearGradient></defs>' +
-      '<g class="w-rays" fill="#FFE3EC" fill-opacity="0.16">' + rays + '</g>' +
-      '<circle class="w-glow" cx="180" cy="150" r="130" fill="url(#wGlow)"/>' + stars +
-      '<g class="w-cross"><rect x="168" y="94" width="24" height="112" rx="9" fill="#FFFFFF"/><rect x="136" y="124" width="88" height="24" rx="9" fill="#FFFFFF"/></g>' +
-      '<path d="M0 250 L60 205 L110 235 L170 190 L230 238 L290 200 L360 245 L360 330 L0 330Z" fill="url(#wM1)"/>' +
-      '<path d="M0 276 L70 236 L130 268 L200 228 L270 272 L330 246 L360 262 L360 330 L0 330Z" fill="url(#wM2)"/>' + dots +
-      '<path d="M0 302 L80 272 L150 298 L230 268 L300 296 L360 282 L360 330 L0 330Z" fill="url(#wM3)"/></svg></div>' +
-      '<div class="w-body"><div class="w-kicker" style="animation-delay:.2s">' + esc(M.author) + '</div>' +
-      '<h2 class="w-title" style="animation-delay:.35s">' + esc(M.title) + '</h2>' +
-      '<div class="w-tag" style="animation-delay:.5s">Your breakthrough is closer than you think.</div>' +
-      '<p class="w-text" style="animation-delay:.65s">This full devotional and its powerful tools are for readers with a personal access code. Reach out today and receive yours.</p>' +
-      '<div class="w-feats" style="animation-delay:.8s">' + feats + '</div>' +
-      '<div class="w-reach" style="animation-delay:.95s"><h3>Ready to unlock it?</h3>' +
-      '<p>Send us a message and receive your personal access code. One reader, one device, yours to keep.</p>' + ctaRow(CODE_MSG) + '</div></div>' +
-      '<div class="w-bar"><button class="btn light w-go" id="btnStart">Get Started</button><button class="btn ghost w-go" id="btnGetCode">Get a code</button></div></div>';
-    $('#btnStart').addEventListener('click', function () { cur = 'lock'; render(); main.scrollTop = 0; });
-    $('#btnGetCode').addEventListener('click', function () { openInfo('contact'); });
+    var CP = window.CoverPage;
+    if (CP && typeof CP.render === 'function') {
+      try {
+        CP.render(view, function () { cur = 'lock'; render(); main.scrollTop = 0; });
+        return;
+      } catch (e) { /* fall through to the code screen */ }
+    }
+    cur = 'lock';
+    renderLock();
   }
 
   function renderLock() {
@@ -489,7 +462,7 @@
       '<button class="eye" id="btnEye" type="button" aria-label="Show code" aria-pressed="false">' + svg('eye') + '</button></div></div>' +
       '<button class="btn block" id="btnUnlock">Unlock Book</button>' +
       '<button class="btn text" id="btnNeedCode">Need a code? Contact us</button>' +
-      '<button class="btn text" id="btnWelcome">Back</button></div>';
+      (window.CoverPage ? '<button class="btn text" id="btnWelcome">Back</button>' : '') + '</div>';
     $('#btnUnlock').addEventListener('click', doUnlock);
     $('#codeInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { doUnlock(); } });
     $('#btnEye').addEventListener('click', function () {
@@ -501,7 +474,7 @@
       inp.focus();
     });
     $('#btnNeedCode').addEventListener('click', function () { openInfo('contact'); });
-    $('#btnWelcome').addEventListener('click', function () { cur = 'welcome'; render(); main.scrollTop = 0; });
+    if ($('#btnWelcome')) { $('#btnWelcome').addEventListener('click', function () { cur = 'welcome'; render(); main.scrollTop = 0; }); }
   }
 
   function doUnlock() {
