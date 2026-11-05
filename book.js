@@ -11,7 +11,7 @@
     kicker: 'A Christian Devotional',
 
     /* LOGO */
-    logo: 'https://app.donvictorministry.org.ng/gospel/no-1-dvm-logo.png',
+    logo: 'https://app.donvictorministry.org.ng/book/ebook-icon.png',
 
     about: [
       "Don't Give Up! is a faith-based devotional for anyone walking through a dark valley. Drawing on Jeremiah 29:11 and the stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, it shows how God's faithfulness prevails in every season of struggle.",
