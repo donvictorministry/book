@@ -390,12 +390,12 @@
     $('#rightBack').addEventListener('click', backOv);
 
     $('#navToc').innerHTML = '<span class="pill">' + svg('list') + '</span><span>TOC</span>';
-    $('#navFront').innerHTML = '<span class="pill">' + svg('home') + '</span><span>Front</span>';
+    $('#navHome').innerHTML = '<span class="pill">' + svg('home') + '</span><span>Front</span>';
     $('#navPrev').innerHTML = '<span class="pill">' + svg('prev') + '</span><span>Prev</span>';
     $('#navNext').innerHTML = '<span class="pill">' + svg('next') + '</span><span>Next</span>';
     $('#btnDark').innerHTML = '<span class="pill"></span><span class="lbl">Dark</span>';
     $('#navToc').addEventListener('click', function () { go('toc'); });
-    $('#navFront').addEventListener('click', function () { go('front'); });
+    $('#navHome').addEventListener('click', function () { go('front'); });
     $('#navPrev').addEventListener('click', function () { step(-1); });
     $('#navNext').addEventListener('click', function () { step(1); });
     $('#btnDark').addEventListener('click', function () { setTheme(theme() === 'dark' ? 'light' : 'dark'); });
