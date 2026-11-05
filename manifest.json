@@ -1,7 +1,7 @@
 {
-  "name": "Don't Give Up! by Rev. Dr. Chris Johnson",
+  "name": "Don't Give Up! © Rev. Dr. Don Victor, PhD",
   "short_name": "Don't Give Up",
-  "description": "A faith-based devotional ebook by Rev. Dr. Chris Johnson, PhD. Works offline after you unlock it.",
+  "description": "A faith-based devotional. Deepen your faith, strengthen your spiritual life, and grow in your walk with God through this inspiring e-book by Rev. Dr. Don Victor, PhD. Featuring faith-building reflections and biblical insights, it is designed to encourage, equip, and draw you closer to God every day. Unlock your copy once and enjoy convenient offline reading anytime, anywhere—even without an internet connection.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
@@ -13,19 +13,19 @@
   "categories": ["books", "lifestyle"],
   "icons": [
     {
-      "src": "https://REPLACE-WITH-YOUR-HOSTED-URL/icon-192.png",
+      "src": "https://app.donvictorministry.org.ng/book/ebook-icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://REPLACE-WITH-YOUR-HOSTED-URL/icon-512.png",
+      "src": "https://app.donvictorministry.org.ng/book/ebook-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://REPLACE-WITH-YOUR-HOSTED-URL/icon-maskable-512.png",
+      "src": "https://app.donvictorministry.org.ng/book/ebook-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
