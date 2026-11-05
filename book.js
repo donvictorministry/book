@@ -19,7 +19,7 @@
       'Whether you are battling disappointment, facing uncertainty, enduring hardship, or simply struggling to find the strength to keep going, these pages will encourage you to hold on to God's promises, trust His timing, and keep your faith alive.'
       'Each chapter concludes with a short, faith-filled declaration designed to strengthen your spirit and help you speak God's promises over your life.'
       'Read one chapter at a time, or explore the chapters in any order using the Table of Contents. Wherever you begin, let each reading remind you of one enduring truth: Your story is not over. God is still faithful.' 
-       'Don't Give Up! © Dr. Don Victor, PhD.' 
+       'Never Give Up! Dr. Don Victor, PhD.' 
  
   ],
 
