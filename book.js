@@ -15,7 +15,7 @@
 logo: 'https://app.donvictorministry.org.ng/book/ebook-icon.png',
 
 about: [
-  "𝗗𝗢𝗡'𝗧 𝗚𝗜𝗩𝗘 𝗨𝗣!\n\nMore than a devotional, this is a heartfelt reminder that your present struggles do not define your future. No matter how dark the valley may seem, God's faithfulness remains constant.",
+  "More than a devotional, this is a heartfelt reminder that your present struggles do not define your future. No matter how dark the valley may seem, God's faithfulness remains constant.",
 
   "𝗕𝗜𝗕𝗟𝗜𝗖𝗔𝗟 𝗜𝗡𝗦𝗣𝗜𝗥𝗔𝗧𝗜𝗢𝗡\n\nDrawing on Jeremiah 29:11 and the inspiring stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional reveals how God remains faithful through life's most difficult seasons.",
 
@@ -27,7 +27,7 @@ about: [
 
   "𝗥𝗘𝗔𝗗 𝗔𝗧 𝗬𝗢𝗨𝗥 𝗢𝗪𝗡 𝗣𝗔𝗖𝗘\n\nRead one chapter at a time or explore the chapters in any order using the Table of Contents.",
 
-  "𝗬𝗢𝗨𝗥 𝗦𝗧𝗢𝗥𝗬 𝗜𝗦 𝗡𝗢𝗧 𝗢𝗩𝗘𝗥.\n\nGod is still faithful. Don't give up!"
+  "𝗬𝗢𝗨𝗥 𝗦𝗧𝗢𝗥𝗬 𝗜𝗦 𝗡𝗢𝗧 𝗢𝗩𝗘𝗥\n\nGod is still faithful. Don't give up!\n\nWishing you a rewarding and enriching reading encounter with God."
 ],
 
 /* Contact */
