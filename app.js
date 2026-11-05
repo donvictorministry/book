@@ -204,7 +204,7 @@
     g.innerHTML = '<div class="dlg" role="alertdialog" aria-modal="true"><div class="dlg-ic">' + svg('lock', 36) + '</div><h2></h2><p></p>' +
       '<div class="dlg-actions"><button class="btn outline" id="gateClose">Close</button><button class="btn" id="gateCode">Enter code</button></div></div>';
     $('h2', g).textContent = 'Access code needed';
-    $('p', g).textContent = label + ' is free to open, but only readers with an access code can use it.';
+    $('p', g).textContent = label + 'only readers with an access code can use it.';
     document.body.appendChild(g);
     $('#gateClose').addEventListener('click', backOv);
     $('#gateCode').addEventListener('click', goUnlock);
@@ -325,18 +325,18 @@
     how: { title: 'How to Use', html: function () {
       return '<div class="info"><h3>Unlock</h3><ol><li>Type the access code you received and tap Unlock Book.</li><li>Each code works on one device only. Do not share it.</li></ol>' +
         '<h3>Move through the book</h3><ul><li><b>TOC</b> opens the Table of Contents.</li><li><b>Home</b> returns to the home page.</li><li><b>Prev</b> and <b>Next</b> turn the page.</li><li><b>Dark</b> switches dark and light mode.</li></ul>' +
-        '<h3>Menus</h3><ul><li>The left menu has information about the book and the ministry.</li><li>The right menu has text size, dark mode, your to-do list, Install App and Share App.</li></ul>' +
+        '<h3>Menus</h3><ul><li>The left menu has information about the book and the ministry.</li><li>The right menu has notepad, text size, dark mode, your to-do list, Install App and Share App.</li></ul>' +
         '<h3>Offline</h3><p>After you unlock the book once, it works without internet. It checks your access again when you are online.</p></div>';
     } },
     terms: { title: 'Terms of Use', html: function () {
-      return '<div class="info"><h3>Copyright</h3><p>Copyright 2025 ' + esc(M.author) + '. All rights reserved.</p>' +
-        '<h3>One-device license</h3><p>Your access code unlocks this book on one device only, for your personal reading and spiritual growth.</p>' +
-        '<h3>You may</h3><ul><li>Read the book on your unlocked device.</li><li>Quote short passages with full credit for non-commercial ministry use.</li><li>Share the app link so others can ask for their own code.</li></ul>' +
-        '<h3>You may not</h3><ul><li>Share, sell, or give away your access code.</li><li>Copy, republish, or redistribute the text.</li><li>Create derivative works without written permission.</li></ul>' +
-        '<h3>Access changes</h3><p>Codes that are shared or resold can be disabled without notice.</p><h3>Permissions</h3><p>Write to ' + esc(M.email) + ' for permission requests.</p></div>';
+      return '<div class="info"><h3>Copyright</h3><p>Copyright 2026' + esc(M.author) + '. All rights reserved.</p>' +
+        '<h3>One-device license</h3><p>This ebook is protected by copyright and is provided strictly for personal use. All payments made are dedicated exclusively to supporting ministry purposes.</p>' +
+        '<h3>You may</h3><ul><li>Read the book on your unlocked device.</li><li>Brief quotations from this ebook are permitted, provided that appropriate acknowledgement and full attribution to the author are clearly given.</li><li>Sharing the official ebook link with others to encourage wider readership and access is expressly permitted. However, access to the ebook requires a valid PIN code, which must be obtained through the author's contact details in the app.</li></ul>' +
+        '<h3>You may not</h3><ul><li>Share, sell, or give away your access code.</li><li>No right or licence is granted to any person or entity to reproduce, copy, distribute, publish, sell, resell, modify, or otherwise exploit this ebook, in whole or in part, for commercial or non-commercial purposes without the author's prior written consent. Your access code unlocks this book on one device only, for your personal reading and spiritual growth.</li></ul>' +
+        '<h3>Access changes</h3><p>Any PIN access code shared, transferred, resold, or otherwise used in violation of these terms may be revoked or deactivated by the author without prior notice.</p><h3>Permissions</h3><p>Write to ' + esc(M.email) + ' for permission requests.</p></div>';
     } },
     support: { title: 'Support Us', html: function () {
-      return '<div class="info"><p>This ministry flourishes because of people who faithfully stand with us. Here is how you can help.</p>' +
+      return '<div class="info"><p>This ministry is sustained by the generosity and commitment of its supporters. Here is how you can help.</p>' +
         '<ul><li><b>Pray</b> for the lives this message reaches.</li><li><b>Give</b> to fund ministry outreach and new resources. Contact us for giving details.</li><li><b>Share</b> the app with someone who needs encouragement.</li><li><b>Volunteer</b> your time and skills.</li></ul>' +
         '<p>Heaven records every seed sown for the Gospel. Thank you for partnering with us.</p>' + ctaRow() + '</div>';
     } },
