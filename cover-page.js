@@ -16,8 +16,8 @@
       line1: "Don't Give",
       line2: 'Up!',
       kicker: 'A DEVOTIONAL BY',
-      author: 'Rev. Dr. Chris Johnson, PhD',
-      button: 'BEGIN JOURNEY'
+      author: 'Rev. Don Victor, PhD',
+      button: 'Begin Journey'
     };
     var C = {
       brand: '#DF1E5A', brandDark: '#B3124A', brandDeep: '#6E0A2E', plum: '#3A0A1F',
