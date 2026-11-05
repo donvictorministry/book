@@ -1,5 +1,5 @@
-/* sw.js - offline support. Bump CACHE when you change any file (for example ebook-v2). */
-var CACHE = 'ebook-v2.2';
+/* sw.js - offline support.*/
+var CACHE = 'ebook-v2.4';
 var SHELL = ['./', 'index.html', 'styles.css', 'app.js', 'book.js', 'lock.js', 'manifest.json'];
 
 self.addEventListener('install', function (e) {
@@ -26,7 +26,6 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(req.url);
   /* Only same-origin files. Apps Script and other sites go straight to the network. */
   if (url.origin !== self.location.origin) { return; }
-  /* The admin page is never cached. */
   if (/admin\.html$/i.test(url.pathname)) { return; }
 
   if (req.mode === 'navigate') {
