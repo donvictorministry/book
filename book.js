@@ -19,7 +19,7 @@ about: [
 
   "𝗕𝗜𝗕𝗟𝗜𝗖𝗔𝗟 𝗜𝗡𝗦𝗣𝗜𝗥𝗔𝗧𝗜𝗢𝗡\n\nDrawing on Jeremiah 29:11 and the inspiring stories of Joseph, David, the woman with the issue of blood, and Paul and Silas, this devotional reveals how God remains faithful through life's most difficult seasons.",
 
-  "𝗪𝗛𝗔𝗧 𝗬𝗢𝗨 𝗪𝗜𝗟𝗟 𝗗𝗜𝗦𝗖𝗢𝗩𝗘𝗥\n\n• Delays do not mean God has forgotten you.\n\n• Setbacks do not determine your final destination.\n\n• God is still at work, even when you cannot see it.\n\n• Your circumstances do not have the final say over your future.",
+  "𝗪𝗛𝗔𝗧 𝗬𝗢𝗨 𝗪𝗜𝗟𝗟 𝗗𝗜𝗦𝗖𝗢𝗩𝗘𝗥\n\n Delays do not mean God has forgotten you.\n\n• Setbacks do not determine your final destination.\n\n God is still at work, even when you cannot see it.\n\n Your circumstances do not have the final say over your future.",
 
   "𝗔 𝗪𝗢𝗥𝗗 𝗢𝗙 𝗘𝗡𝗖𝗢𝗨𝗥𝗔𝗚𝗘𝗠𝗘𝗡𝗧\n\nWhether you are battling disappointment, facing uncertainty, enduring hardship, or struggling to find the strength to keep going, these pages will encourage you to hold on to God's promises, trust His timing, and keep your faith alive.",
 
