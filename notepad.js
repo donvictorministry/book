@@ -145,7 +145,7 @@
 
     /* ===== MARKUP ===== */
     var tools = [
-      ['new', 'plus', '+ New Note'], ['redo', 'redo', 'Redo'], ['undo', 'undo', 'Undo'], ['paste', 'paste', 'Paste'],
+      ['new', 'plus', 'New Note'], ['redo', 'redo', 'Redo'], ['undo', 'undo', 'Undo'], ['paste', 'paste', 'Paste'],
       ['copy', 'copy', 'Copy'], ['import', 'imp', 'Import'], ['export', 'save', 'Export'], ['exit', 'exit', 'Exit']
     ];
     var toolsHTML = tools.map(function(t) {
