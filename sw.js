@@ -1,5 +1,5 @@
 /* sw.js - offline support.*/
-var CACHE = 'ebook-v2.5';
+var CACHE = 'ebook-v2.6';
 var SHELL = ['./', 'index.html', 'styles.css', 'app.js', 'book.js', 'lock.js', 'manifest.json'];
 
 self.addEventListener('install', function (e) {
