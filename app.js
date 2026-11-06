@@ -337,7 +337,7 @@
     } },
     support: { title: 'Support Us', html: function () {
       return '<div class="info"><p>This ministry is sustained by the generosity and commitment of its supporters. Here is how you can help.</p>' +
-        '<ul><li><b>Pray</b>that God will transform every life touched by this ebook.</li><li><b>Give</b>to support ministry outreach, develop digital technology, and create new resources. Contact us for giving details.</li><li><b>Share</b>with someone the gift of encouragement, hope, and spiritual growth by purchasing this ebook for them.</li><li><b>Volunteer</b>your time and skills to support the ministry's work and outreach.</li></ul>' +
+        '<ul><li><b>Pray</b> that God will transform every life touched by this ebook.</li><li><b>Give</b> to support ministry outreach, develop digital technology, and create new resources. Contact us for giving details.</li><li><b>Share</b> with someone the gift of encouragement, hope, and spiritual growth by purchasing this ebook for them.</li><li><b>Volunteer</b> your time and skills to support the ministry\'s work and outreach.</li></ul>' +
         '<p>Heaven records every seed sown for the Gospel. Thank you for partnering with us.</p>' + ctaRow() + '</div>';
     } },
     contact: { title: 'Contact Us', html: function () {
