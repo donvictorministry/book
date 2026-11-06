@@ -330,18 +330,18 @@
     } },
     terms: { title: 'Terms of Use', html: function () {
       return '<div class="info"><h3>Copyright</h3><p>Copyright 2026 ' + esc(M.author) + '. All rights reserved.</p>' +
-        '<h3>One-device license</h3><p>This ebook is protected by copyright and is provided strictly for personal use. All payments made are dedicated exclusively to supporting ministry purposes.</p>' +
-        '<h3>You may</h3><ul><li>Read the book on your unlocked device.</li><li>Brief quotations from this ebook are permitted, provided that appropriate acknowledgement and full attribution to the author are clearly given.</li><li>Sharing the official ebook link with others to encourage wider readership and access is expressly permitted. However, access to the ebook requires a valid PIN code, which must be obtained through the author\'s contact details in the app.</li></ul>' +
-        '<h3>You may not</h3><ul><li>Share, sell, or give away your access code.</li><li>No right or licence is granted to any person or entity to reproduce, copy, distribute, publish, sell, resell, modify, or otherwise exploit this ebook, in whole or in part, for commercial or non-commercial purposes without the author\'s prior written consent. Your access code unlocks this book on one device only, for your personal reading and spiritual growth.</li></ul>' +
-        '<h3>Access changes</h3><p>Any PIN access code shared, transferred, resold, or otherwise used in violation of these terms may be revoked or deactivated by the author without prior notice.</p><h3>Permissions</h3><p>Write to ' + esc(M.email) + ' for permission requests.</p></div>';
+        '<h3>One-Device License</h3><p>This ebook is protected by copyright and is provided strictly for personal use. Each PIN access code is device-specific and cannot be used on multiple devices.</p>' +
+        '<h3>You May</h3><ul><li>Read the book on your unlocked device.</li><li>Brief quotations from this ebook are permitted, provided that appropriate acknowledgement and full attribution to the author are clearly given.</li><li>Sharing the official ebook link with others to encourage wider readership and access is expressly permitted. However, access to the ebook requires a valid PIN code, which must be obtained through the author\'s contact details in the app.</li></ul>' +
+        '<h3>You May Not</h3><ul><li>Share, sell, or give away your access code.</li><li>No right or licence is granted to any person or entity to reproduce, copy, distribute, publish, sell, resell, modify, or otherwise exploit this ebook, in whole or in part, for commercial or non-commercial purposes without the author\'s prior written consent. Your access code unlocks this book on one device only, for your personal reading and spiritual growth.</li></ul>' +
+        '<h3>Access Changes</h3><p>Any PIN access code shared, transferred, resold, or otherwise used in violation of these terms may be revoked or deactivated by the author without prior notice.</p><h3>Permissions</h3><p>Write to ' + esc(M.email) + ' for permission requests.</p></div>';
     } },
     support: { title: 'Support Us', html: function () {
       return '<div class="info"><p>This ministry is sustained by the generosity and commitment of its supporters. Here is how you can help.</p>' +
-        '<ul><li><b>Pray</b> for the lives this message reaches.</li><li><b>Give</b> to fund ministry outreach and new resources. Contact us for giving details.</li><li><b>Share</b> the app with someone who needs encouragement.</li><li><b>Volunteer</b> your time and skills.</li></ul>' +
+        '<ul><li><b>Pray</b>that God will transform every life touched by this ebook.</li><li><b>Give</b>to support ministry outreach, develop digital technology, and create new resources. Contact us for giving details.</li><li><b>Share</b>with someone the gift of encouragement, hope, and spiritual growth by purchasing this ebook for them.</li><li><b>Volunteer</b>your time and skills to support the ministry's work and outreach.</li></ul>' +
         '<p>Heaven records every seed sown for the Gospel. Thank you for partnering with us.</p>' + ctaRow() + '</div>';
     } },
     contact: { title: 'Contact Us', html: function () {
-      return '<div class="info"><p>Need a prayer, a testimony to share, an access code, or help with the app? Reach out. We reply within 48 hours.</p>' +
+      return '<div class="info"><p>We would love to hear from you! Reach out with your prayer requests, testimonies, access code enquiries, or app-related concerns. Our team will respond as soon as reasonably possible.</p>' +
         '<p><b>Email:</b> ' + esc(M.email) + '</p><p><b>Phone:</b> ' + esc(M.phone) + '</p>' + ctaRow(CODE_MSG) + '</div>';
     } }
   };
