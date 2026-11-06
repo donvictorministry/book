@@ -204,7 +204,7 @@
     g.innerHTML = '<div class="dlg" role="alertdialog" aria-modal="true"><div class="dlg-ic">' + svg('lock', 36) + '</div><h2></h2><p></p>' +
       '<div class="dlg-actions"><button class="btn outline" id="gateClose">Close</button><button class="btn" id="gateCode">Enter code</button></div></div>';
     $('h2', g).textContent = 'Access code needed';
-    $('p', g).textContent = label + 'only readers with an access code can use it.';
+    $('p', g).textContent = label + ' only readers with an access code can use it.';
     document.body.appendChild(g);
     $('#gateClose').addEventListener('click', backOv);
     $('#gateCode').addEventListener('click', goUnlock);
@@ -329,10 +329,10 @@
         '<h3>Offline</h3><p>After you unlock the book once, it works without internet. It checks your access again when you are online.</p></div>';
     } },
     terms: { title: 'Terms of Use', html: function () {
-      return '<div class="info"><h3>Copyright</h3><p>Copyright 2026' + esc(M.author) + '. All rights reserved.</p>' +
+      return '<div class="info"><h3>Copyright</h3><p>Copyright 2026 ' + esc(M.author) + '. All rights reserved.</p>' +
         '<h3>One-device license</h3><p>This ebook is protected by copyright and is provided strictly for personal use. All payments made are dedicated exclusively to supporting ministry purposes.</p>' +
-        '<h3>You may</h3><ul><li>Read the book on your unlocked device.</li><li>Brief quotations from this ebook are permitted, provided that appropriate acknowledgement and full attribution to the author are clearly given.</li><li>Sharing the official ebook link with others to encourage wider readership and access is expressly permitted. However, access to the ebook requires a valid PIN code, which must be obtained through the author's contact details in the app.</li></ul>' +
-        '<h3>You may not</h3><ul><li>Share, sell, or give away your access code.</li><li>No right or licence is granted to any person or entity to reproduce, copy, distribute, publish, sell, resell, modify, or otherwise exploit this ebook, in whole or in part, for commercial or non-commercial purposes without the author's prior written consent. Your access code unlocks this book on one device only, for your personal reading and spiritual growth.</li></ul>' +
+        '<h3>You may</h3><ul><li>Read the book on your unlocked device.</li><li>Brief quotations from this ebook are permitted, provided that appropriate acknowledgement and full attribution to the author are clearly given.</li><li>Sharing the official ebook link with others to encourage wider readership and access is expressly permitted. However, access to the ebook requires a valid PIN code, which must be obtained through the author\'s contact details in the app.</li></ul>' +
+        '<h3>You may not</h3><ul><li>Share, sell, or give away your access code.</li><li>No right or licence is granted to any person or entity to reproduce, copy, distribute, publish, sell, resell, modify, or otherwise exploit this ebook, in whole or in part, for commercial or non-commercial purposes without the author\'s prior written consent. Your access code unlocks this book on one device only, for your personal reading and spiritual growth.</li></ul>' +
         '<h3>Access changes</h3><p>Any PIN access code shared, transferred, resold, or otherwise used in violation of these terms may be revoked or deactivated by the author without prior notice.</p><h3>Permissions</h3><p>Write to ' + esc(M.email) + ' for permission requests.</p></div>';
     } },
     support: { title: 'Support Us', html: function () {
